@@ -4,10 +4,19 @@
   *ngIf="shouldRun"
 >
   <mat-toolbar color="primary" class="toolbar">
+    <<<<<<< HEAD
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
     <h1 class="app-name">Devs</h1>
+    =======
+    <div class="toolbar-wrapper">
+      <button mat-icon-button (click)="snav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <a [href]="'/'" class="app-name">Devs</a>
+    </div>
+    >>>>>>> bed05ce (chore: add ui)
   </mat-toolbar>
 
   <mat-sidenav-container
@@ -21,9 +30,7 @@
       fixedTopGap="56"
     >
       <mat-nav-list>
-        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{
-          nav
-        }}</a>
+        <a mat-list-item routerLink="/dashboard">Dashboard</a>
       </mat-nav-list>
     </mat-sidenav>
 
