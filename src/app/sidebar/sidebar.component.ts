@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core'
 import { MediaMatcher, BreakpointObserver, BreakpointState } from '@angular/cdk/layout'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-sidebar',
@@ -26,7 +27,8 @@ export class SidebarComponent implements OnDestroy {
   constructor (
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    private readonly breakpointObserver: BreakpointObserver
+    private readonly breakpointObserver: BreakpointObserver,
+    private readonly route: Router
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)')
     this._mobileQueryListener = () => { changeDetectorRef.detectChanges() }
@@ -48,6 +50,10 @@ export class SidebarComponent implements OnDestroy {
 
   ngOnDestroy (): void {
     this.mobileQuery.removeListener(this._mobileQueryListener)
+  }
+
+  async goToHome (): Promise<void> {
+    await this.route.navigate([''])
   }
 
   shouldRun = /(^|.)(localhost:4200)$/.test(window.location.host)

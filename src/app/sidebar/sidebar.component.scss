@@ -7,15 +7,25 @@
   left: 0;
   right: 0;
 
+  .header {
+    display: block;
+    align-self: start;
+  }
+
   &.is-mobile .toolbar {
     position: fixed;
     /* Make sure the toolbar will stay on top of the content as it scrolls past. */
     z-index: 2;
   }
 
-  h1.app-name {
-    margin-top: 1rem;
+  a.app-name {
     margin-left: 0.5rem;
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    &:hover {
+      text-decoration: none;
+    }
   }
 
   .sidenav-container {

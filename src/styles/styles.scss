@@ -1,10 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 
-//@import 'normalize.css';
+@import 'normalize.css';
 @import "variables";
 
-html { background-color: green !important; }
 body {
-  background: green !important;
-}
+  .toolbar-wrapper {
+    display: flex;
+    align-items: center;
+  }
 
+  @media only screen and (min-width: 1800px) {
+    height: 100%;
+
+    .toolbar-wrapper, .mat-drawer-content.mat-sidenav-content {
+      width: 1200px;
+      margin: auto;
+    }
+  }
+}
