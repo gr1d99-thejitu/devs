@@ -5,11 +5,13 @@
         <mat-card-title>Create Account</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div>
+        <div class="field-wrapper">
           <mat-form-field>
             <mat-label>Full Name</mat-label>
             <input matInput placeholder="John Doe" formControlName="fullName" />
-            <mat-error *ngIf="fieldErrors('fullName')"> Fix errors </mat-error>
+            <mat-error *ngIf="f['fullName'].errors" class="error-wrapper">
+              {{ winningError("fullName")[0] }}
+            </mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Email</mat-label>
@@ -20,9 +22,12 @@
               type="email"
               formControlName="email"
             />
+            <mat-error *ngIf="f['email'].errors" class="error-wrapper">
+              {{ winningError("email")[0] }}
+            </mat-error>
           </mat-form-field>
         </div>
-        <div>
+        <div class="field-wrapper">
           <mat-form-field>
             <mat-label>Password</mat-label>
             <input
@@ -31,6 +36,9 @@
               type="password"
               formControlName="password"
             />
+            <mat-error *ngIf="f['password'].errors" class="error-wrapper">
+              {{ winningError("password")[0] }}
+            </mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Confirm Password</mat-label>
@@ -40,6 +48,12 @@
               type="password"
               formControlName="confirmPassword"
             />
+            <mat-error
+              *ngIf="f['confirmPassword'].errors"
+              class="error-wrapper"
+            >
+              {{ winningError("confirmPassword")[0] }}
+            </mat-error>
           </mat-form-field>
         </div>
       </mat-card-content>

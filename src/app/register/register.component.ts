@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  EmailValidator,
   FormBuilder,
   FormControl,
   FormGroup,
   ValidationErrors,
-  Validator,
   Validators,
 } from '@angular/forms';
 
 // TOD0: Add confirm password validator
+
+type FieldName = 'fullName' | 'email' | 'password' | 'confirmPassword';
 
 @Component({
   selector: 'app-register',
@@ -30,15 +30,42 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.accountForm = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
-      fullName: ['', Validators.minLength(3)],
+      fullName: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: [''],
     });
   }
   submitted = false;
 
-  get f(): { [key: string]: AbstractControl } {
+  get f(): {
+    [key in FieldName]: AbstractControl;
+  } {
     return this.accountForm.controls;
+  }
+
+  winningError(fieldName: FieldName) {
+    let errors: string[] = [];
+    const controlErrors = this.f[fieldName].errors;
+
+    if (controlErrors !== null) {
+      const errorList = Object.keys(controlErrors);
+
+      errorList.forEach((errorKey) => {
+        switch (errorKey) {
+          case 'required': {
+            return errors.push('Required!');
+          }
+
+          default: {
+            return errors;
+          }
+        }
+      });
+
+      return errors;
+    }
+
+    return errors;
   }
 
   onSubmit() {
@@ -50,13 +77,11 @@ export class RegisterComponent implements OnInit {
 
     console.log(JSON.stringify(this.accountForm.value));
   }
-  getControlError(controlName: string): ValidationErrors | null {
-    return this.f[controlName].errors;
+  getControlError(controlName: FieldName): ValidationErrors | null {
+    return this.f[controlName as FieldName].errors;
   }
 
-  fieldErrors(
-    controlName: 'fullName' | 'email' | 'password' | 'confirmPassword'
-  ) {
+  fieldErrors(controlName: FieldName) {
     const errors = this.getControlError(controlName);
 
     if (errors !== null) {
@@ -64,5 +89,11 @@ export class RegisterComponent implements OnInit {
     }
 
     return [];
+  }
+
+  errorMessage(error: { [key: string]: string }): string {
+    const errors = Object.values(error);
+    console.log(errors, error);
+    return errors[0];
   }
 }
