@@ -7,9 +7,20 @@
   left: 0;
   right: 0;
 
-  .header {
-    display: block;
-    align-self: start;
+  .toolbar-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    div:nth-child(1) {
+      display: flex;
+      align-items: center;
+    }
+
+    div:last-child {
+      display: flex;
+      gap: 2rem;
+      font-weight: lighter;
+    }
   }
 
   &.is-mobile .toolbar {

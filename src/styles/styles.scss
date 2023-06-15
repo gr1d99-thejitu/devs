@@ -4,6 +4,11 @@
 @import "variables";
 
 body {
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
   .toolbar-wrapper {
     display: flex;
     align-items: center;

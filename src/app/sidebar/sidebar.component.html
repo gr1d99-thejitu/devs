@@ -5,10 +5,16 @@
 >
   <mat-toolbar color="primary" class="toolbar">
     <div class="toolbar-wrapper">
-      <button mat-icon-button (click)="snav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <a [href]="'/'" class="app-name">Devs</a>
+      <div>
+        <button mat-icon-button (click)="snav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <a [href]="'/'" class="app-name">Devs</a>
+      </div>
+      <div>
+        <a routerLink="/register">Create Account</a>
+        <a routerLink="/login">Login</a>
+      </div>
     </div>
   </mat-toolbar>
 
