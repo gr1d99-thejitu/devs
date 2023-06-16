@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './providers/auth-interceptor';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AuthInterceptor } from './providers/auth-interceptor';
     DeveloperComponent,
     DashboardComponent,
     RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
