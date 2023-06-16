@@ -8,7 +8,9 @@
   right: 0;
 
   .toolbar-wrapper {
+    width: 100%;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 
     div:nth-child(1) {
@@ -49,5 +51,11 @@
     /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
        `<body>` to be our scrolling element for mobile layouts. */
     flex: 1 0 auto;
+  }
+
+
+  .mat-drawer-opened .content {
+    background-color: green;
+    //margin: auto !important;
   }
 }
