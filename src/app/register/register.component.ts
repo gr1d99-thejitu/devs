@@ -7,10 +7,13 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { User } from '../types';
+import { Router } from '@angular/router';
 
 // TOD0: Add confirm password validator
 
-type FieldName = 'fullName' | 'email' | 'password' | 'confirmPassword';
+type FieldName = 'full_names' | 'email' | 'password' | 'confirm_password';
 
 @Component({
   selector: 'app-register',
@@ -18,21 +21,25 @@ type FieldName = 'fullName' | 'email' | 'password' | 'confirmPassword';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   accountForm = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
-    fullName: new FormControl('', Validators.minLength(3)),
+    full_names: new FormControl('', Validators.minLength(3)),
     password: new FormControl('', Validators.required),
-    confirmPassword: new FormControl(''),
+    confirm_password: new FormControl(''),
   });
 
   ngOnInit() {
     this.accountForm = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
-      fullName: ['', Validators.required],
+      full_names: ['', Validators.required],
       password: ['', Validators.required],
-      confirmPassword: [''],
+      confirm_password: [''],
     });
   }
   submitted = false;
@@ -44,7 +51,7 @@ export class RegisterComponent implements OnInit {
   }
 
   winningError(fieldName: FieldName) {
-    let errors: string[] = [];
+    const errors: string[] = [];
     const controlErrors = this.f[fieldName].errors;
 
     if (controlErrors !== null) {
@@ -75,7 +82,9 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    console.log(JSON.stringify(this.accountForm.value));
+    this.authService.register(this.accountForm.value as User).subscribe(() => {
+      return this.router.navigate(['/login']);
+    });
   }
   getControlError(controlName: FieldName): ValidationErrors | null {
     return this.f[controlName as FieldName].errors;
