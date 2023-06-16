@@ -9,16 +9,16 @@ body {
     color: white;
   }
 
-  .toolbar-wrapper {
-    display: flex;
-    align-items: center;
-  }
-
   @media only screen and (min-width: 1800px) {
     height: 100%;
 
-    .toolbar-wrapper, .mat-drawer-content.mat-sidenav-content {
+    .mat-drawer-content.mat-sidenav-content {
       width: 1200px;
+      margin: auto;
+    }
+
+    div.toolbar-wrapper {
+      max-width: 1200px;
       margin: auto;
     }
   }
