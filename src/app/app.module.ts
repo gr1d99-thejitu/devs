@@ -21,6 +21,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './providers/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -45,9 +47,12 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    HttpClientModule,
     MatCardModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
