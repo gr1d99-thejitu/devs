@@ -1,3 +1,5 @@
+@import "../../styles/variables";
+
 .app-container {
   display: flex;
   flex-direction: column;
@@ -56,6 +58,12 @@
 
   .mat-drawer-opened .content {
     background-color: green;
-    //margin: auto !important;
+  }
+
+  @media only screen and (min-width: 1200px) {
+    .toolbar-wrapper {
+      width: 1200px;
+      margin: auto;
+    }
   }
 }
