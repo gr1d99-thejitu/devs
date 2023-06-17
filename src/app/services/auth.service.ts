@@ -5,8 +5,8 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import { catchError, Observable, of, throwError } from 'rxjs';
-import { User, UserCredentials } from '../types';
+import { catchError, Observable, Subject, throwError } from 'rxjs';
+import { LoginResponse, User, UserCredentials } from '../types';
 import localForage from 'localforage';
 import { Router } from '@angular/router';
 
@@ -18,6 +18,27 @@ export class AuthService {
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient, private router: Router) {}
 
+  public isAuthenticated = new Subject<boolean>();
+
+  get checkAuthentication(): Observable<boolean> {
+    return new Observable<boolean>((observable) => {
+      localForage
+        .getItem(environment.authCredentialsKey)
+        .then((value) => {
+          if (value === null || value === undefined) {
+            observable.next(false);
+            this.isAuthenticated.next(false);
+          } else {
+            observable.next(true);
+            this.isAuthenticated.next(true);
+          }
+        })
+        .catch(() => {
+          observable.next(false);
+          this.isAuthenticated.next(false);
+        });
+    });
+  }
   handleError(error: HttpErrorResponse) {
     let msg = '';
 
@@ -44,20 +65,31 @@ export class AuthService {
     const api = `${this.endpoint}/auth/login`;
 
     this.http
-      .post<{ access_token: string; refresh_token: string }>(api, credentials)
+      .post<LoginResponse>(api, credentials)
       .pipe(catchError(this.handleError))
       .subscribe((res) => {
-        void localForage.setItem(
-          environment.authCredentialsKey,
-          JSON.stringify(res),
-          (err) => {
-            if (err) {
-              return;
-            }
-
-            void this.router.navigate(['/']);
+        void localForage.setItem(environment.authCredentialsKey, res, (err) => {
+          if (err) {
+            this.isAuthenticated.next(false);
+            return;
           }
-        );
+
+          this.isAuthenticated.next(true);
+          void this.router.navigate(['/']);
+        });
+      });
+  }
+
+  logout(): void {
+    localForage
+      .removeItem(environment.authCredentialsKey)
+      .then(() => {
+        this.isAuthenticated.next(false);
+      })
+      .catch(() => {
+        this.checkAuthentication.subscribe((prevResult) => {
+          this.isAuthenticated.next(prevResult);
+        });
       });
   }
 }

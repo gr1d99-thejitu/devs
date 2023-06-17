@@ -9,3 +9,8 @@ export type UserCredentials = {
   email: User['email'];
   password: User['password'];
 };
+
+export interface LoginResponse {
+  access_token: string;
+  refresh_token: string;
+}

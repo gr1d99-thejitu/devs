@@ -1,60 +1,64 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core'
-import { MediaMatcher, BreakpointObserver, BreakpointState } from '@angular/cdk/layout'
-import { Router } from '@angular/router'
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  MediaMatcher,
+  BreakpointObserver,
+  BreakpointState,
+} from '@angular/cdk/layout';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent implements OnDestroy {
-  mobileQuery: MediaQueryList
+export class SidebarComponent implements OnDestroy, OnInit {
+  public isAuthenticated = false;
+  mobileQuery: MediaQueryList;
+  private readonly _mobileQueryListener: () => void;
 
-  fillerNav = Array.from({ length: 50 }, (_, i) => `Nav Item ${i + 1}`)
-
-  fillerContent = Array.from(
-    { length: 50 },
-    () =>
-      `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
-  )
-
-  private readonly _mobileQueryListener: () => void
-
-  constructor (
+  constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     private readonly breakpointObserver: BreakpointObserver,
-    private readonly route: Router
+    private readonly route: Router,
+    private readonly authService: AuthService
   ) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)')
-    this._mobileQueryListener = () => { changeDetectorRef.detectChanges() }
-    this.mobileQuery.addListener(this._mobileQueryListener)
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => {
+      changeDetectorRef.detectChanges();
+    };
+    this.mobileQuery.addListener(this._mobileQueryListener);
 
     // detect screen size changes
-    this.breakpointObserver.observe([
-      '(max-width: 768px)'
-    ]).subscribe((result: BreakpointState) => {
-      if (result.matches) {
-        // hide stuff
-        console.log('big')
-      } else {
-        // show stuff
-        console.log('small')
-      }
-    })
+    this.breakpointObserver
+      .observe(['(max-width: 768px)'])
+      .subscribe((result: BreakpointState) => {
+        if (result.matches) {
+          // hide stuff
+          console.log('big');
+        } else {
+          // show stuff
+          console.log('small');
+        }
+      });
+
+    this.authService.isAuthenticated.subscribe((value) => {
+      this.isAuthenticated = value;
+    });
   }
 
-  ngOnDestroy (): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener)
+  ngOnInit() {
+    console.debug('');
   }
 
-  async goToHome (): Promise<void> {
-    await this.route.navigate([''])
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
-  shouldRun = /(^|.)(localhost:4200)$/.test(window.location.host)
+  onLogout(): void {
+    this.authService.logout();
+  }
+
+  shouldRun = /(^|.)(localhost:4200)$/.test(window.location.host);
 }
