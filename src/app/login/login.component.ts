@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.debug('Initialized');
+    console.debug(this.form.valid);
   }
 
   winningError(fieldName: FieldName) {
