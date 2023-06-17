@@ -5,22 +5,32 @@ import {
   HttpHandler,
 } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { from, lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const authToken = this.authService.getAuthToken();
+    return from(this.fromService(req, next));
+  }
 
-    if (authToken) {
+  async fromService(req: HttpRequest<any>, next: HttpHandler) {
+    try {
+      const authTokens = await this.authService.getAuthToken();
+      if (authTokens === null) {
+        return await lastValueFrom(next.handle(req));
+      }
+
       req = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${authTokens.access_token}`,
         },
       });
-    }
 
-    return next.handle(req);
+      return lastValueFrom(next.handle(req));
+    } catch (e) {
+      return lastValueFrom(next.handle(req));
+    }
   }
 }

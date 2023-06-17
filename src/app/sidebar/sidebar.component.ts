@@ -43,14 +43,14 @@ export class SidebarComponent implements OnDestroy, OnInit {
         }
       });
 
-    this.authService.isAuthenticated.subscribe((value) => {
-      this.isAuthenticated = value;
+    this.authService.checkAuthentication().subscribe(() => {
+      this.authService.isAuthenticated.subscribe((value) => {
+        this.isAuthenticated = value;
+      });
     });
   }
 
-  ngOnInit() {
-    console.debug('');
-  }
+  ngOnInit() {}
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);

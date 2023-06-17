@@ -3,13 +3,14 @@
   [class.is-mobile]="mobileQuery.matches"
   *ngIf="shouldRun"
 >
+  {{ isAuthenticated ? "true" : "false" }}
   <mat-toolbar color="primary" class="toolbar">
     <div class="toolbar-wrapper">
       <div>
         <button mat-icon-button (click)="snav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
-        <a [href]="'/'" class="app-name">Devs</a>
+        <a routerLink="/" class="app-name">Devs</a>
       </div>
       <div>
         <a routerLink="/register" *ngIf="!isAuthenticated">Create Account</a>

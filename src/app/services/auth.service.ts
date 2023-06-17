@@ -14,13 +14,12 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
+  public isAuthenticated = new Subject<boolean>();
   endpoint = environment.apiUrl;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient, private router: Router) {}
 
-  public isAuthenticated = new Subject<boolean>();
-
-  get checkAuthentication(): Observable<boolean> {
+  checkAuthentication(): Observable<boolean> {
     return new Observable<boolean>((observable) => {
       localForage
         .getItem(environment.authCredentialsKey)
@@ -51,8 +50,8 @@ export class AuthService {
     return throwError(() => msg);
   }
 
-  getAuthToken(): string | null {
-    return localStorage.getItem(environment.authCredentialsKey);
+  getAuthToken(): Promise<LoginResponse | null> {
+    return localForage.getItem(environment.authCredentialsKey);
   }
 
   register(user: User): Observable<any> {
@@ -87,7 +86,7 @@ export class AuthService {
         this.isAuthenticated.next(false);
       })
       .catch(() => {
-        this.checkAuthentication.subscribe((prevResult) => {
+        this.checkAuthentication().subscribe((prevResult) => {
           this.isAuthenticated.next(prevResult);
         });
       });
