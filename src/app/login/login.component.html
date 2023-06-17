@@ -1,37 +1,25 @@
-<div class="register-container">
-  <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+<div class="login-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-card class="form-wrapper">
       <mat-card-header>
-        <mat-card-title>Create Account</mat-card-title>
+        <mat-card-title>Login</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="field-wrapper">
-          <mat-form-field>
-            <mat-label>Full Name</mat-label>
-            <input
-              matInput
-              placeholder="John Doe"
-              formControlName="full_names"
-            />
-            <mat-error *ngIf="f['full_names'].errors" class="error-wrapper">
-              {{ winningError("full_names")[0] }}
-            </mat-error>
-          </mat-form-field>
           <mat-form-field>
             <mat-label>Email</mat-label>
             <input
               matInput
               placeholder="email@example.com"
-              id="email"
-              type="email"
               formControlName="email"
             />
-            <mat-error *ngIf="f['email'].errors" class="error-wrapper">
+            <mat-error
+              *ngIf="form.controls['email'].errors"
+              class="error-wrapper"
+            >
               {{ winningError("email")[0] }}
             </mat-error>
           </mat-form-field>
-        </div>
-        <div class="field-wrapper">
           <mat-form-field>
             <mat-label>Password</mat-label>
             <input
@@ -40,36 +28,27 @@
               type="password"
               formControlName="password"
             />
-            <mat-error *ngIf="f['password'].errors" class="error-wrapper">
-              {{ winningError("password")[0] }}
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Confirm Password</mat-label>
-            <input
-              matInput
-              id="confirmPassword"
-              type="password"
-              formControlName="confirm_password"
-            />
             <mat-error
-              *ngIf="f['confirm_password'].errors"
+              *ngIf="form.controls['password'].errors"
               class="error-wrapper"
             >
-              {{ winningError("confirm_password")[0] }}
+              {{ winningError("password")[0] }}
             </mat-error>
           </mat-form-field>
         </div>
       </mat-card-content>
       <mat-card-footer>
-        <div><a routerLink="/login">Have an account? Login</a></div>
+        <div>
+          <p>Don't have an account?</p>
+          &nbsp;<a routerLink="/register">Register</a>
+        </div>
         <button
           mat-button
           type="submit"
-          [disabled]="!accountForm.valid"
+          [disabled]="!form.valid"
           color="primary"
         >
-          Register
+          Login
         </button>
       </mat-card-footer>
     </mat-card>
