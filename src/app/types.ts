@@ -4,3 +4,8 @@ export interface User {
   password: string;
   confirm_password: string;
 }
+
+export type UserCredentials = {
+  email: User['email'];
+  password: User['password'];
+};

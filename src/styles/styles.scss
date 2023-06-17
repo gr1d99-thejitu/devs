@@ -9,7 +9,7 @@ body {
     color: white;
   }
 
-  @media only screen and (min-width: 1800px) {
+  @media only screen and (min-width: 1200px) {
     height: 100%;
 
     .mat-drawer-content.mat-sidenav-content {
@@ -18,7 +18,7 @@ body {
     }
 
     div.toolbar-wrapper {
-      max-width: 1200px;
+      width: 1200px;
       margin: auto;
     }
   }

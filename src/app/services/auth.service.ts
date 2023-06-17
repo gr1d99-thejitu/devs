@@ -5,8 +5,8 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
-import { User } from '../types';
+import { catchError, Observable, of, throwError } from 'rxjs';
+import { User, UserCredentials } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +15,6 @@ export class AuthService {
   endpoint = environment.apiUrl;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient) {}
-
-  register(user: User): Observable<any> {
-    const api = `${this.endpoint}/users`;
-
-    return this.http.post(api, user).pipe(catchError(this.handleError));
-  }
 
   handleError(error: HttpErrorResponse) {
     let msg = '';
@@ -35,6 +29,20 @@ export class AuthService {
   }
 
   getAuthToken(): string | null {
-    return localStorage.getItem(environment.authTokenKey);
+    return localStorage.getItem(environment.authCredentialsKey);
+  }
+
+  register(user: User): Observable<any> {
+    const api = `${this.endpoint}/users`;
+
+    return this.http.post(api, user).pipe(catchError(this.handleError));
+  }
+
+  login(credentials: UserCredentials): void {
+    const api = `${this.endpoint}/auth/login`;
+
+    this.http.post(api, credentials).subscribe((res) => {
+      console.debug(`In service`, res);
+    });
   }
 }

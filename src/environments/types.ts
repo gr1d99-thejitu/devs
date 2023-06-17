@@ -1,4 +1,4 @@
 export interface Environment {
   apiUrl: string;
-  authTokenKey: string;
+  authCredentialsKey: string;
 }
