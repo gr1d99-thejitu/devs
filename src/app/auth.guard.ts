@@ -5,5 +5,5 @@ import { AuthService } from './services/auth.service';
 export const authGuard: CanActivateFn = (_, __) => {
   const service = inject(AuthService);
 
-  return service.checkAuthentication;
+  return service.checkAuthentication();
 };
