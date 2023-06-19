@@ -1,6 +1,5 @@
-<div *ngIf="developers">
+<div *ngIf="developers[1]">
   <ul *ngFor="let developer of developers">
-    <li>{{developer.name}}</li>
+    <li>{{ developer | json }}</li>
   </ul>
 </div>
-

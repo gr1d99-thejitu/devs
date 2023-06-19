@@ -1,27 +1,24 @@
-import { Component, OnInit } from '@angular/core'
-import { CommonModule } from '@angular/common'
+import { Component, OnInit } from '@angular/core';
 
-import { DeveloperService } from '../services/developer.service'
-import { Developer } from './interfaces'
+import { DeveloperService } from '../services/developer.service';
+import { DeveloperResponse } from '../types';
 
 @Component({
   selector: 'app-developer',
   templateUrl: './developer.component.html',
-  styleUrls: ['./developer.component.scss']
+  styleUrls: ['./developer.component.scss'],
 })
 export class DeveloperComponent implements OnInit {
-  public developers: Developer[] = []
-  constructor (private readonly developerService: DeveloperService) {
+  public developers: [DeveloperResponse[], number] = [[], 0];
+  constructor(private readonly developerService: DeveloperService) {}
+
+  ngOnInit(): void {
+    this.fetchDevelopers();
   }
 
-  ngOnInit (): void {
-    this.fetchDevelopers()
-  }
-
-  fetchDevelopers (): void {
-    this.developerService.fetchDevelopers().subscribe(developers => {
-      console.log(developers)
-      this.developers = developers
-    })
+  fetchDevelopers(): void {
+    this.developerService.fetchDevelopers().subscribe((developers) => {
+      return developers;
+    });
   }
 }

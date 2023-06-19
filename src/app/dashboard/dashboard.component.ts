@@ -1,25 +1,24 @@
-import { Component, OnInit } from '@angular/core'
-import { DeveloperService } from '../services/developer.service'
-import { Developer } from '../developer/interfaces'
+import { Component, OnInit } from '@angular/core';
+import { DeveloperService } from '../services/developer.service';
+import { DeveloperResponse } from '../types';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  developers: Developer[] = []
-  constructor (
-    private readonly developerService: DeveloperService
-  ) {}
+  developers: [DeveloperResponse[], number] = [[], 0];
+  constructor(private readonly developerService: DeveloperService) {}
 
-  ngOnInit (): void {
-    this.fetchDevelopers()
+  ngOnInit(): void {
+    this.fetchDevelopers();
   }
 
-  fetchDevelopers (): void {
-    this.developerService.fetchDevelopers().subscribe(developers => {
-      this.developers = developers
-    })
+  fetchDevelopers(): void {
+    this.developerService.fetchDevelopers().subscribe((developers) => {
+      console.debug(developers[0]);
+      this.developers = developers;
+    });
   }
 }
