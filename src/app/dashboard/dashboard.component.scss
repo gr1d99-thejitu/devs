@@ -1,78 +1,47 @@
 @import "../../styles/variables";
 
 .dashboard-container {
-  padding: 0.75rem;
-  height: inherit;
+  margin-top: 2rem;
+  padding: 0 1rem;
 
-  .header h1 {
-    text-transform: uppercase;
+  .header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    margin-bottom: 1rem;
   }
 
-  .filters, .data h2 {
+  .filters, .content {
+    padding: 1rem 0;
+  }
+
+  h2, h4 {
     text-decoration: underline;
+  }
 
-    &:hover {
-      cursor: pointer;
+  div {
+    ul.dev-list {
+      padding-inline-start: 0
     }
-  }
 
-  .content {
-    display: flex;
-    flex-direction: column;
-  }
+    ul.dev-list li {
+      list-style: none;
+      padding-inline-start: 0
+    }
 
-  .stack {
-    margin-top: .6rem;
-    display: flex;
-    flex-direction: row;
-    align-content: center;
+    h3 {
+      font-weight: bold;
+    }
 
-    .stack-item {
-      border: $border-width solid gray;
+    .dev-list-container {
+      padding: 1rem 0;
+    }
+
+    .skill-item {
+      padding: .2rem .3rem;
+      border: .025rem solid rgba(255,255,255,.12);
+      margin-right: .2rem;
       border-radius: $border-radius;
-      padding: 0 .3rem;
-      margin: 0 .6rem 0 0;
-
-      &:hover {
-        cursor: pointer;
-      }
-    }
-  }
-
-  .mat-mdc-list-item-title {
-    display: flex;
-    align-items: center;
-    overflow-wrap: break-word;
-
-    .separator {
-      padding: 0 0.5rem;
-    }
-  }
-
-  @media only screen and (min-width:  1200px) {
-    padding: 1.5rem;
-
-    .header h1 {
-      text-align: center;
-    }
-
-    .content {
-      flex-direction: row;
-      gap: .25rem;
-
-      .filters {
-        width: 25%;
-      }
-
-      .data {
-        width: 75%;
-      }
-
-      .filters, .data {
-        border-radius: $border-radius;
-        padding: 0.5rem;
-        border: $border-width solid white;
-      }
     }
   }
 }
