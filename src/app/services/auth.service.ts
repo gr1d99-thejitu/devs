@@ -9,6 +9,7 @@ import { catchError, Observable, Subject, throwError } from 'rxjs';
 import { LoginResponse, User, UserCredentials } from '../types';
 import localForage from 'localforage';
 import { Router } from '@angular/router';
+import { ApiErrorService } from './api-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,11 @@ export class AuthService {
   public isAuthenticated = new Subject<boolean>();
   endpoint = environment.apiUrl;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    public errorService: ApiErrorService
+  ) {}
 
   checkAuthentication(): Observable<boolean> {
     return new Observable<boolean>((observable) => {
@@ -38,17 +43,6 @@ export class AuthService {
         });
     });
   }
-  handleError(error: HttpErrorResponse) {
-    let msg = '';
-
-    if (error.error instanceof ErrorEvent) {
-      msg = error.error.message;
-    } else {
-      msg = error.message;
-    }
-
-    return throwError(() => msg);
-  }
 
   getAuthToken(): Promise<LoginResponse | null> {
     return localForage.getItem(environment.authCredentialsKey);
@@ -57,7 +51,9 @@ export class AuthService {
   register(user: User): Observable<any> {
     const api = `${this.endpoint}/users`;
 
-    return this.http.post(api, user).pipe(catchError(this.handleError));
+    return this.http
+      .post(api, user)
+      .pipe(catchError(this.errorService.handleError));
   }
 
   login(credentials: UserCredentials): void {
@@ -65,7 +61,7 @@ export class AuthService {
 
     this.http
       .post<LoginResponse>(api, credentials)
-      .pipe(catchError(this.handleError))
+      .pipe(catchError(this.errorService.handleError))
       .subscribe((res) => {
         void localForage.setItem(environment.authCredentialsKey, res, (err) => {
           if (err) {

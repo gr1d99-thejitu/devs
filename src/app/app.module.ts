@@ -24,6 +24,14 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './providers/auth-interceptor';
 import { LoginComponent } from './login/login.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { A11yModule } from '@angular/cdk/a11y';
+import { SharedModule } from './shared/shared.module';
+import { CreateDeveloperDialogComponent } from './create-developer-dialog/create-developer-dialog.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -34,6 +42,7 @@ import { LoginComponent } from './login/login.component';
     DashboardComponent,
     RegisterComponent,
     LoginComponent,
+    CreateDeveloperDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +60,13 @@ import { LoginComponent } from './login/login.component';
     MatInputModule,
     HttpClientModule,
     MatCardModule,
+    MatDialogModule,
+    A11yModule,
+    SharedModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
