@@ -1,4 +1,9 @@
-export interface User {
+export interface Timestamp {
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface User extends Timestamp {
   email: string;
   full_names: string;
   password: string;
@@ -15,17 +20,11 @@ export interface LoginResponse {
   refresh_token: string;
 }
 
-export interface User {
-  readonly id: string;
-  full_names: string;
-  email: string;
-}
-
-export interface ProgrammingLanguage {
+export interface ProgrammingLanguage extends Timestamp {
   readonly id: string;
   name: string;
 }
-export interface Developer {
+export interface Developer extends Timestamp {
   readonly id: number;
   name: string;
   title: string;
