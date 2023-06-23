@@ -6,7 +6,12 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { catchError, Observable, Subject, throwError } from 'rxjs';
-import { LoginResponse, User, UserCredentials } from '../types';
+import {
+  LoginResponse,
+  NewUserFormValue,
+  User,
+  UserCredentials,
+} from '../types';
 import localForage from 'localforage';
 import { Router } from '@angular/router';
 import { ApiErrorService } from './api-error.service';
@@ -48,12 +53,15 @@ export class AuthService {
     return localForage.getItem(environment.authCredentialsKey);
   }
 
-  register(user: User): Observable<any> {
+  register(user: NewUserFormValue) {
     const api = `${this.endpoint}/users`;
 
-    return this.http
+    this.http
       .post(api, user)
-      .pipe(catchError(this.errorService.handleError));
+      .pipe(catchError(this.errorService.handleError))
+      .subscribe(() => {
+        return this.router.navigate(['/login']);
+      });
   }
 
   login(credentials: UserCredentials): void {

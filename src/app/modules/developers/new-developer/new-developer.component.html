@@ -1,0 +1,67 @@
+<section class="developers new-developer-container">
+  <mat-card class="mat-typography">
+    <mat-card-header>
+      <h2 mat-card-title>Add New Developer</h2>
+    </mat-card-header>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-card-content>
+        <mat-checkbox formControlName="createUser"
+          >Create new User?</mat-checkbox
+        >
+        <div>
+          <div formGroupName="user">
+            <h3>User Information</h3>
+            <div class="user-information-fields-wrapper">
+              <mat-form-field>
+                <label>Full Names</label>
+                <input
+                  matInput
+                  type="text"
+                  name="fullNames"
+                  formControlName="fullNames"
+                />
+              </mat-form-field>
+              <mat-form-field>
+                <label>Email</label>
+                <input
+                  matInput
+                  type="text"
+                  name="email"
+                  formControlName="email"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div formGroupName="developer">
+            <h3>Developer Information</h3>
+
+            <div class="developer-information-fields-wrapper">
+              <div>
+                <mat-form-field>
+                  <label>Title</label>
+                  <input matInput type="text" formControlName="title" />
+                </mat-form-field>
+                <div class="activate-account">
+                  <mat-checkbox formControlName="createUser"
+                    >Activate Account?</mat-checkbox
+                  >
+                </div>
+              </div>
+              <div>
+                <mat-form-field>
+                  <label>Programming Languages</label>
+                  <mat-select formControlName="skills" multiple>
+                    <mat-option>Ruby</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button color="primary">Proceed</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</section>

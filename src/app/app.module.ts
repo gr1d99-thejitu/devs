@@ -32,6 +32,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DevelopersModule } from './modules/developers/developers.module';
 
 @NgModule({
   declarations: [
@@ -56,8 +57,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatListModule,
     CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     HttpClientModule,
     MatCardModule,
     MatDialogModule,
@@ -67,6 +66,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatCheckboxModule,
     MatChipsModule,
     MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+    DevelopersModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

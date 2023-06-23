@@ -1,0 +1,73 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-card class="form-wrapper">
+    <mat-card-header>
+      <mat-card-title>Create Account</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="field-wrapper">
+        <mat-form-field>
+          <mat-label>Full Name</mat-label>
+          <input matInput placeholder="John Doe" formControlName="full_names" />
+          <mat-error
+            *ngIf="form.controls['full_names'].errors"
+            class="error-wrapper"
+          >
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="email@example.com"
+            id="email"
+            type="email"
+            formControlName="email"
+          />
+          <mat-error
+            *ngIf="form.controls['email'].errors"
+            class="error-wrapper"
+          >
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="field-wrapper">
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            id="password"
+            type="password"
+            formControlName="password"
+          />
+          <mat-error
+            *ngIf="form.controls['password'].errors"
+            class="error-wrapper"
+          >
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Confirm Password</mat-label>
+          <input
+            matInput
+            id="confirmPassword"
+            type="password"
+            formControlName="confirm_password"
+          />
+          <mat-error
+            *ngIf="form.controls['confirm_password'].errors"
+            class="error-wrapper"
+          >
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-footer>
+      <div>
+        <p>Have an account?&nbsp;<a routerLink="/login">Login</a></p>
+      </div>
+      <button mat-button type="submit" [disabled]="!form.valid" color="primary">
+        Register
+      </button>
+    </mat-card-footer>
+  </mat-card>
+</form>
