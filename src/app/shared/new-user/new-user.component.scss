@@ -1,0 +1,42 @@
+mat-card-header {
+  padding: 1rem;
+}
+
+mat-card-content {
+  padding: 0 1rem;
+
+  .field-wrapper {
+    display: flex;
+
+    mat-form-field {
+      margin-right: 1rem;
+      margin-top: 1rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+mat-card-footer button {
+  display: block;
+}
+
+mat-card-footer div {
+  display: inline-flex;
+  align-items: center;
+}
+
+mat-card-footer {
+  display: flex;
+  padding: 0 2rem 1rem 1rem;
+;
+  justify-content: space-between;
+  justify-items: center;
+  align-items: baseline;
+
+  a {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,87 @@
+@import "../../../../styles/variables";
+.developers {
+  &.new-developer-container {
+    margin: 2rem auto;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .user-information-fields-wrapper,
+  .developer-information-fields-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .developer-information-fields-wrapper {
+    display: flex;
+
+    div {
+      &:first-child {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &:last-child {
+        padding: 1rem 0 0;
+        width: 100%;
+      }
+
+      .activate-account {
+        width: 100%;
+      }
+    }
+  }
+
+  @media only screen and (min-width: $breakpoint-laptop) {
+    &.new-developer-container {
+      width: 60%;
+    }
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .user-information-fields-wrapper,
+    .developer-information-fields-wrapper {
+      display: flex;
+      flex-direction: row;
+
+      mat-form-field {
+        margin-right: 1rem;
+
+        &:last-child {
+          margin-right: 0;
+        };
+      }
+    }
+
+    .developer-information-fields-wrapper {
+      flex-direction: column;
+
+      div {
+        &:first-child {
+          display: flex;
+          flex-direction: row;
+        }
+
+        &:last-child {
+          width: 100%;
+        }
+
+        mat-form-field {
+          width: 50%;
+
+          &:last-child {
+            width: 100%;
+          }
+        }
+
+        .activate-account {
+          width: 50%
+        }
+      }
+    }
+  }
+}

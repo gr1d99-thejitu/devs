@@ -9,7 +9,7 @@ body {
     color: white;
   }
 
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: $breakpoint-desktop) {
     height: 100%;
 
     .mat-drawer-content.mat-sidenav-content {

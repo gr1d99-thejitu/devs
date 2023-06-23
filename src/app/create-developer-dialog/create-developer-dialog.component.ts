@@ -7,12 +7,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ProgrammingLanguage } from '../types';
+import { ProgrammingLanguage, User } from '../types';
 import { ProgrammingLanguageService } from '../services/programming-language.service';
 import { map, Observable, startWith } from 'rxjs';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-create-developer-dialog',
@@ -22,6 +23,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 export class CreateDeveloperDialogComponent implements OnInit {
   separatorKeyCodes: number[] = [ENTER, COMMA];
   skills: [ProgrammingLanguage[], number] = [[], 0];
+  users: [User[], number] = [[], 0];
   selectedSkills: string[] = [];
   filteredSkills = new Observable<string[]>();
 
@@ -31,7 +33,8 @@ export class CreateDeveloperDialogComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private programmingLanguageService: ProgrammingLanguageService
+    private programmingLanguageService: ProgrammingLanguageService,
+    private userService: UserService
   ) {
     this.filteredSkills =
       this.developerForm.controls.programmingLanguages.valueChanges.pipe(
@@ -45,8 +48,8 @@ export class CreateDeveloperDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('init');
     this.fetchProgrammingLanguages();
+    this.fetchUsers();
   }
 
   developerForm = this.fb.group({
@@ -56,7 +59,10 @@ export class CreateDeveloperDialogComponent implements OnInit {
     isApproved: [''],
   });
 
-  onSubmit() {}
+  onSubmit() {
+    console.log(this.developerForm.value);
+    console.log(this.selectedSkills);
+  }
 
   fetchProgrammingLanguages() {
     this.programmingLanguageService
@@ -64,6 +70,12 @@ export class CreateDeveloperDialogComponent implements OnInit {
       .subscribe((languages) => {
         this.skills = languages;
       });
+  }
+
+  fetchUsers() {
+    this.userService.fetchUsers().subscribe((users) => {
+      this.users = users;
+    });
   }
 
   add(event: MatChipInputEvent) {

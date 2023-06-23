@@ -4,6 +4,7 @@ export interface Timestamp {
 }
 
 export interface User extends Timestamp {
+  readonly id: string;
   email: string;
   full_names: string;
   password: string;
@@ -35,3 +36,9 @@ export interface DeveloperResponse extends Developer {
   user: User;
   programming_languages: ProgrammingLanguage[];
 }
+
+export type NewUserFormValue = Required<
+  Omit<User, 'id' | 'created_at' | 'updated_at'> & {
+    confirm_password: string;
+  }
+>;
