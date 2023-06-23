@@ -5,14 +5,22 @@
     </mat-card-header>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <mat-card-content>
-        <mat-checkbox formControlName="createUser"
+        <mat-checkbox
+          formControlName="createUser"
+          style="padding-bottom: 0.5rem"
           >Create new User?</mat-checkbox
         >
         <div>
           <div formGroupName="user">
             <h3>User Information</h3>
             <div class="user-information-fields-wrapper">
-              <mat-form-field>
+              <mat-form-field *ngIf="!canCreateNewUser">
+                <label>Select User</label>
+                <mat-select formControlName="existingUser">
+                  <mat-option value="ruby">Ruby</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field *ngIf="canCreateNewUser">
                 <label>Full Names</label>
                 <input
                   matInput
@@ -21,7 +29,7 @@
                   formControlName="fullNames"
                 />
               </mat-form-field>
-              <mat-form-field>
+              <mat-form-field *ngIf="canCreateNewUser">
                 <label>Email</label>
                 <input
                   matInput
@@ -42,7 +50,7 @@
                   <input matInput type="text" formControlName="title" />
                 </mat-form-field>
                 <div class="activate-account">
-                  <mat-checkbox formControlName="createUser"
+                  <mat-checkbox formControlName="activateAccount"
                     >Activate Account?</mat-checkbox
                   >
                 </div>
