@@ -5,7 +5,7 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import { catchError, Observable, Subject, throwError } from 'rxjs';
+import { catchError, from, Observable, Subject, throwError } from 'rxjs';
 import {
   LoginResponse,
   NewUserFormValue,
@@ -13,7 +13,7 @@ import {
   UserCredentials,
 } from '../types';
 import localForage from 'localforage';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiErrorService } from './api-error.service';
 
 @Injectable({
@@ -26,6 +26,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private activatedRouter: ActivatedRoute,
     public errorService: ApiErrorService
   ) {}
 
@@ -77,21 +78,24 @@ export class AuthService {
             return;
           }
 
+          const { queryParams } = this.activatedRouter.snapshot;
+          const nextPath = queryParams?.['next'] || '/';
           this.isAuthenticated.next(true);
-          void this.router.navigate(['/']);
+          void this.router.navigate([nextPath]);
         });
       });
   }
 
-  logout(): void {
+  logout() {
     localForage
       .removeItem(environment.authCredentialsKey)
       .then(() => {
         this.isAuthenticated.next(false);
       })
-      .catch(() => {
-        this.checkAuthentication().subscribe((prevResult) => {
-          this.isAuthenticated.next(prevResult);
+      .catch((e) => {
+        this.errorService.handleError(e);
+        this.checkAuthentication().subscribe(() => {
+          return this.isAuthenticated.next(false);
         });
       });
   }
