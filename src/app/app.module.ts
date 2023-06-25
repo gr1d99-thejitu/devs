@@ -33,6 +33,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DevelopersModule } from './modules/developers/developers.module';
+import { ResponseInterceptorInterceptor } from './providers/response-interceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,11 @@ import { DevelopersModule } from './modules/developers/developers.module';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ResponseInterceptorInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

@@ -21,9 +21,7 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    console.debug(this.form.valid);
-  }
+  ngOnInit() {}
 
   winningError(fieldName: FieldName) {
     const errors: string[] = [];
