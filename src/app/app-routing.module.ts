@@ -19,7 +19,11 @@ const routes: Routes = [
   },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'developers/new', component: NewDeveloperComponent },
+  {
+    path: 'developers/new',
+    component: NewDeveloperComponent,
+    canActivate: [authGuard],
+  },
 ];
 
 @NgModule({
